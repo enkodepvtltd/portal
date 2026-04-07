@@ -1,130 +1,134 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# --- FULL SCREEN TAKEOVER ---
-st.set_page_config(page_title="🚨 FATAL ERROR: SHIBU_VIRUS 🚨", layout="wide", initial_sidebar_state="collapsed")
+# --- Forced Mobile Optimization ---
+st.set_page_config(
+    page_title="⚠️ SYSTEM CRITICAL ⚠️", 
+    layout="centered", 
+    initial_sidebar_state="collapsed"
+)
 
-# --- THE POLTERGEIST ENGINE (JS) ---
-# This is where the real trolling happens.
-troll_engine = """
-<script>
-    const d = window.parent.document;
-    let clickCount = 0;
+# --- THE ULTIMATE ANDROID TROLL ENGINE ---
+# Features: Haptic feedback, Fullscreen lock, and Escaping buttons
+troll_code = """
+<div id="virus-screen" style="
+    position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
+    background: #000; color: #0f0; z-index: 999999; 
+    font-family: 'Courier New', monospace; overflow: hidden;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    padding: 20px; box-sizing: border-box; text-align: center;">
 
-    function absoluteChaos() {
-        const buttons = d.querySelectorAll('button');
-        let yesBtn, noBtn;
+    <div id="setup">
+        <h1 style="font-size: 2.5rem; color: red;">🛑 SECURITY BREACH 🛑</h1>
+        <p style="font-size: 1.2rem;">DNA Mismatch: 'Patti Shibu' Strain Detected.</p>
+        <button onclick="startTroll()" style="
+            background: #0f0; color: black; padding: 20px; 
+            border: none; font-weight: bold; font-size: 1.5rem; margin-top: 20px;">
+            CLEAN SYSTEM
+        </button>
+    </div>
+
+    <div id="main-troll" style="display: none; width: 100%;">
+        <h2 id="msg" style="font-size: 1.8rem; color: yellow;">ARE YOU PATTI SHIBU'S DAUGHTER?</h2>
         
-        buttons.forEach(b => {
-            if (b.innerText.includes('YES')) yesBtn = b;
-            if (b.innerText.includes('NO')) noBtn = b;
-        });
+        <div style="height: 300px; width: 100%; position: relative; margin-top: 50px;">
+            <button id="yes-btn" onclick="win()" style="
+                padding: 20px 40px; background: #0f0; border: 5px solid white;
+                font-weight: bold; position: absolute; left: 50%; top: 20%;
+                transform: translateX(-50%); z-index: 100; transition: 0.1s;">
+                YES (I CONFIRM)
+            </button>
 
-        if (noBtn && yesBtn) {
-            // 1. THE REJECTED 'NO'
-            noBtn.onmouseover = () => {
-                noBtn.style.position = 'fixed';
-                noBtn.style.left = Math.random() * 90 + 'vw';
-                noBtn.style.top = Math.random() * 90 + 'vh';
-                noBtn.style.transform = `rotate(${Math.random() * 360}deg)`;
-                noBtn.innerText = "LIES! 🐕";
-                
-                // 2. THE GROWING 'YES' (Covers everything)
-                clickCount++;
-                const scale = 1 + (clickCount * 0.5);
-                yesBtn.style.position = 'fixed';
-                yesBtn.style.left = '50%';
-                yesBtn.style.top = '50%';
-                yesBtn.style.transform = `translate(-50%, -50%) scale(${scale})`;
-                yesBtn.style.zIndex = '10000';
-                
-                // 3. COLOR INVERSION TROLL
-                if(clickCount > 5) {
-                    d.body.style.filter = clickCount % 2 === 0 ? 'invert(1)' : 'invert(0)';
-                }
-            };
+            <button id="no-btn" ontouchstart="moveNo()" style="
+                padding: 15px 30px; background: red; color: white;
+                border: none; font-weight: bold; position: absolute; left: 50%; top: 70%;
+                transform: translateX(-50%); transition: 0.05s;">
+                NO
+            </button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const setup = document.getElementById('setup');
+    const main = document.getElementById('main-troll');
+    const noBtn = document.getElementById('no-btn');
+    const yesBtn = document.getElementById('yes-btn');
+    const msg = document.getElementById('msg');
+    const screen = document.getElementById('virus-screen');
+
+    let scale = 1;
+    let lies = 0;
+
+    function startTroll() {
+        // Request Fullscreen for Android
+        if (document.documentElement.requestFullscreen) {
+            document.documentElement.requestFullscreen();
+        }
+        setup.style.display = 'none';
+        main.style.display = 'block';
+    }
+
+    function moveNo() {
+        // Vibrate phone on 'No' attempt
+        if (navigator.vibrate) navigator.vibrate(100);
+        
+        // Move No Button
+        noBtn.style.left = (Math.random() * 70 + 5) + '%';
+        noBtn.style.top = (Math.random() * 70 + 5) + '%';
+        noBtn.innerText = "ACCESS DENIED 🐕";
+        
+        // Grow Yes Button
+        scale += 0.4;
+        yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
+        
+        lies++;
+        if (lies > 5) {
+            screen.style.animation = "shake 0.1s infinite";
+            msg.innerText = "THE DOG BLOOD IS STRONG IN YOU!";
+            msg.style.color = "orange";
+        }
+        if (lies > 10) {
+            alert("CRITICAL ERROR: DNA verified as Dog Shibu. Stop resisting.");
         }
     }
-    
-    // Force the engine to run every 50ms
-    setInterval(absoluteChaos, 50);
-    
-    // Block the escape key
-    d.onkeydown = (e) => {
-        if(e.key === 'Escape') {
-            alert("ESC IS DISABLED FOR PATTI SHIBU'S DAUGHTER");
-            return false;
+
+    function win() {
+        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
+        screen.innerHTML = `
+            <div style="width: 100%; height: 100%; animation: strobe 0.05s infinite; 
+                 display: flex; flex-direction: column; align-items: center; justify-content: center; color: black;">
+                <div style="background: white; padding: 30px; border: 15px solid black; transform: rotate(-5deg);">
+                    <h1 style="font-size: 3rem;">CERTIFIED ✅</h1>
+                    <h2 style="color: red;">DAUGHTER OF PATTI SHIBU</h2>
+                    <p style="font-size: 1.5rem;">(The Dog of the Century)</p>
+                    <marquee style="font-size: 5rem;">🐕🦴🐕🦴🐕</marquee>
+                    <p style="font-size: 1rem; margin-top: 20px;">Verification by ENKode CyberLabs</p>
+                </div>
+            </div>
+        `;
+    }
+
+    // Styles for vibrations and strobes
+    const style = document.createElement('style');
+    style.innerHTML = `
+        @keyframes shake { 0% {left:2px;} 50% {left:-2px;} 100% {left:0;} }
+        @keyframes strobe { 
+            0% {background: #ff00ff;} 33% {background: #00ffff;} 
+            66% {background: #ffff00;} 100% {background: #ff00ff;} 
         }
-    };
+    `;
+    document.head.appendChild(style);
 </script>
 """
 
-# --- THE VISUAL NIGHTMARE (CSS) ---
+# --- Injecting into Streamlit ---
+components.html(troll_code, height=800)
+
+# Cleaning up Streamlit UI
 st.markdown("""
     <style>
-    /* Hide Everything Streamlit */
     header, footer, #MainMenu {visibility: hidden !important;}
-    .stApp { background: #000 !important; overflow: hidden !important; }
-
-    @keyframes glitch {
-        0% { clip: rect(44px, 9999px, 56px, 0); transform: skew(0.5deg); }
-        100% { clip: rect(12px, 9999px, 90px, 0); transform: skew(0.5deg); }
-    }
-    .glitch-title {
-        font-family: 'Courier New', monospace;
-        font-size: 6rem;
-        font-weight: bold;
-        color: #00ff00;
-        text-align: center;
-        animation: glitch 0.1s linear infinite;
-    }
+    .stApp {background: black !important;}
     </style>
-    """, unsafe_allow_html=True)
-
-# --- APP LOGIC ---
-if 'stage' not in st.session_state:
-    st.session_state.stage = 'lock'
-
-if st.session_state.stage == 'lock':
-    st.markdown("<h1 class='glitch-title'>DATABASE LOCKED</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='text-align:center; color:red; font-size: 2rem;'>ENKode Bio-Metric Scanner: DNA Match found with 'Patti Shibu'</p>", unsafe_allow_html=True)
-    if st.button("VERIFY DNA"):
-        st.session_state.stage = 'chaos'
-        st.rerun()
-
-elif st.session_state.stage == 'chaos':
-    components.html(troll_engine, height=0)
-    st.markdown("<h1 style='color:white; text-align:center;'>FINAL VERIFICATION</h1>", unsafe_allow_html=True)
-    st.markdown("<h2 style='color:yellow; text-align:center;'>Are you Patti Shibu's biological daughter?</h2>", unsafe_allow_html=True)
-    
-    col1, col2 = st.columns(2)
-    with col1:
-        if st.button("YES (I CONFIRM MY DOG HERITAGE)", type="primary"):
-            st.session_state.stage = 'ultimate'
-            st.rerun()
-    with col2:
-        st.button("NO", type="secondary")
-
-elif st.session_state.stage == 'ultimate':
-    st.markdown("""
-        <style>
-        @keyframes flash-chaos {
-            0% { background: #ff00ff; }
-            20% { background: #00ffff; }
-            40% { background: #ffff00; }
-            60% { background: #ff0000; }
-            80% { background: #00ff00; }
-            100% { background: #ffffff; }
-        }
-        .stApp { animation: flash-chaos 0.03s infinite !important; }
-        </style>
-        <div style="position:fixed; top:50%; left:50%; transform:translate(-50%, -50%); 
-                    background:white; color:black; padding:100px; border:30px solid black; 
-                    z-index:99999; text-align:center; min-width:80vw;">
-            <h1 style="font-size: 8rem;">CONFIRMED ✅</h1>
-            <h2 style="font-size: 4rem; color:red;">PATTI SHIBU'S DAUGHTER</h2>
-            <marquee scrollamount="60" style="font-size: 10rem;">🐕🦴🐕🦴🐕🦴🐕🦴🐕</marquee>
-            <marquee direction="right" scrollamount="100" style="font-size: 10rem;">🦴🐕🦴🐕🦴🐕🦴🐕🦴</marquee>
-            <h1 style="font-size: 5rem;">(Dog Shibu Supremacy)</h1>
-        </div>
     """, unsafe_allow_html=True)
