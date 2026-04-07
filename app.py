@@ -1,134 +1,131 @@
 import streamlit as st
 import streamlit.components.v1 as components
 
-# --- Forced Mobile Optimization ---
-st.set_page_config(
-    page_title="⚠️ SYSTEM CRITICAL ⚠️", 
-    layout="centered", 
-    initial_sidebar_state="collapsed"
-)
+# --- Mobile-First Layout ---
+st.set_page_config(page_title="A Message for You", layout="centered")
 
-# --- THE ULTIMATE ANDROID TROLL ENGINE ---
-# Features: Haptic feedback, Fullscreen lock, and Escaping buttons
-troll_code = """
-<div id="virus-screen" style="
+troll_html = """
+<div id="wrapper" style="
     position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-    background: #000; color: #0f0; z-index: 999999; 
-    font-family: 'Courier New', monospace; overflow: hidden;
+    background: #fff5f5; z-index: 999999; overflow: hidden;
     display: flex; flex-direction: column; align-items: center; justify-content: center;
-    padding: 20px; box-sizing: border-box; text-align: center;">
+    transition: all 0.5s ease;">
 
-    <div id="setup">
-        <h1 style="font-size: 2.5rem; color: red;">🛑 SECURITY BREACH 🛑</h1>
-        <p style="font-size: 1.2rem;">DNA Mismatch: 'Patti Shibu' Strain Detected.</p>
-        <button onclick="startTroll()" style="
-            background: #0f0; color: black; padding: 20px; 
-            border: none; font-weight: bold; font-size: 1.5rem; margin-top: 20px;">
-            CLEAN SYSTEM
+    <div id="letter-stage" style="text-align: center; padding: 30px; font-family: 'Georgia', serif;">
+        <div style="font-size: 5rem; margin-bottom: 20px;">✉️</div>
+        <h1 style="color: #d63384; font-style: italic;">To Someone Special</h1>
+        <p style="color: #555; line-height: 1.6; font-size: 1.1rem;">
+            I've been thinking about our friendship and everything we've been through. 
+            I wanted to share something sincere with you... 
+            please open this digital envelope to see the truth.
+        </p>
+        <button onclick="triggerTwist()" style="
+            background: #d63384; color: white; padding: 15px 40px; 
+            border: none; border-radius: 30px; font-size: 1.2rem; 
+            cursor: pointer; box-shadow: 0 4px 15px rgba(214, 51, 132, 0.3);">
+            Open Heartfelt Letter
         </button>
     </div>
 
-    <div id="main-troll" style="display: none; width: 100%;">
-        <h2 id="msg" style="font-size: 1.8rem; color: yellow;">ARE YOU PATTI SHIBU'S DAUGHTER?</h2>
-        
-        <div style="height: 300px; width: 100%; position: relative; margin-top: 50px;">
-            <button id="yes-btn" onclick="win()" style="
-                padding: 20px 40px; background: #0f0; border: 5px solid white;
-                font-weight: bold; position: absolute; left: 50%; top: 20%;
-                transform: translateX(-50%); z-index: 100; transition: 0.1s;">
-                YES (I CONFIRM)
+    <div id="chaos-stage" style="display: none; width: 100%; text-align: center;">
+        <h1 id="warning" style="font-family: 'Courier New', monospace; color: red; font-size: 2rem;">
+            ⚠️ SCANNING GENETICS... ⚠️
+        </h1>
+        <div id="button-area" style="height: 400px; width: 100%; position: relative;">
+            <button id="yes-btn" onclick="finishHim()" style="
+                position: absolute; left: 50%; top: 30%; transform: translateX(-50%);
+                padding: 20px 40px; background: #28a745; color: white; 
+                border: 4px solid #fff; font-weight: bold; font-size: 1.5rem; z-index: 10;">
+                YES, I AM A SHIBU
             </button>
-
-            <button id="no-btn" ontouchstart="moveNo()" style="
-                padding: 15px 30px; background: red; color: white;
-                border: none; font-weight: bold; position: absolute; left: 50%; top: 70%;
-                transform: translateX(-50%); transition: 0.05s;">
-                NO
+            <button id="no-btn" ontouchstart="trollNo()" style="
+                position: absolute; left: 50%; top: 70%; transform: translateX(-50%);
+                padding: 15px 30px; background: #000; color: #fff; border: none;
+                font-weight: bold;">
+                I AM NOT
             </button>
         </div>
     </div>
 </div>
 
 <script>
-    const setup = document.getElementById('setup');
-    const main = document.getElementById('main-troll');
+    const wrapper = document.getElementById('wrapper');
+    const letter = document.getElementById('letter-stage');
+    const chaos = document.getElementById('chaos-stage');
     const noBtn = document.getElementById('no-btn');
     const yesBtn = document.getElementById('yes-btn');
-    const msg = document.getElementById('msg');
-    const screen = document.getElementById('virus-screen');
-
+    const warning = document.getElementById('warning');
+    
     let scale = 1;
-    let lies = 0;
+    let attempts = 0;
 
-    function startTroll() {
-        // Request Fullscreen for Android
+    function triggerTwist() {
+        // Fullscreen for Android impact
         if (document.documentElement.requestFullscreen) {
             document.documentElement.requestFullscreen();
         }
-        setup.style.display = 'none';
-        main.style.display = 'block';
+        
+        // Sudden switch from Pink to Black/Matrix style
+        letter.style.display = 'none';
+        chaos.style.display = 'block';
+        wrapper.style.backgroundColor = 'black';
+        
+        if (navigator.vibrate) navigator.vibrate([100, 50, 100]);
     }
 
-    function moveNo() {
-        // Vibrate phone on 'No' attempt
-        if (navigator.vibrate) navigator.vibrate(100);
+    function trollNo() {
+        attempts++;
+        if (navigator.vibrate) navigator.vibrate(80);
         
-        // Move No Button
-        noBtn.style.left = (Math.random() * 70 + 5) + '%';
-        noBtn.style.top = (Math.random() * 70 + 5) + '%';
-        noBtn.innerText = "ACCESS DENIED 🐕";
+        // Move NO button randomly
+        noBtn.style.left = Math.random() * 80 + '%';
+        noBtn.style.top = Math.random() * 80 + '%';
+        noBtn.innerText = "LIES DETECTED 🐕";
         
-        // Grow Yes Button
-        scale += 0.4;
+        // Scale YES button to take over
+        scale += 0.5;
         yesBtn.style.transform = `translateX(-50%) scale(${scale})`;
         
-        lies++;
-        if (lies > 5) {
-            screen.style.animation = "shake 0.1s infinite";
-            msg.innerText = "THE DOG BLOOD IS STRONG IN YOU!";
-            msg.style.color = "orange";
-        }
-        if (lies > 10) {
-            alert("CRITICAL ERROR: DNA verified as Dog Shibu. Stop resisting.");
+        if (attempts > 5) {
+            wrapper.style.animation = "glitch 0.1s infinite";
+            warning.innerText = "DNA CONFIRMED: 100% DOG";
         }
     }
 
-    function win() {
-        if (navigator.vibrate) navigator.vibrate([200, 100, 200]);
-        screen.innerHTML = `
-            <div style="width: 100%; height: 100%; animation: strobe 0.05s infinite; 
-                 display: flex; flex-direction: column; align-items: center; justify-content: center; color: black;">
-                <div style="background: white; padding: 30px; border: 15px solid black; transform: rotate(-5deg);">
-                    <h1 style="font-size: 3rem;">CERTIFIED ✅</h1>
-                    <h2 style="color: red;">DAUGHTER OF PATTI SHIBU</h2>
-                    <p style="font-size: 1.5rem;">(The Dog of the Century)</p>
-                    <marquee style="font-size: 5rem;">🐕🦴🐕🦴🐕</marquee>
-                    <p style="font-size: 1rem; margin-top: 20px;">Verification by ENKode CyberLabs</p>
+    function finishHim() {
+        if (navigator.vibrate) navigator.vibrate([500, 100, 500]);
+        wrapper.innerHTML = `
+            <div style="height: 100vh; width: 100vw; animation: strobe 0.05s infinite; 
+                 display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;">
+                <div style="background: yellow; border: 20px solid black; padding: 40px; transform: rotate(5deg);">
+                    <h1 style="color: black; font-size: 3rem;">CERTIFIED ✅</h1>
+                    <h2 style="color: red; font-size: 2rem;">THE REAL DAUGHTER OF</h2>
+                    <h1 style="color: blue; font-size: 4.5rem;">PATTI SHIBU</h1>
+                    <p style="font-size: 1.5rem; color: black;">(Adhava Dog Shibu's Daughter)</p>
+                    <marquee scrollamount="40" style="font-size: 6rem;">🐕🐕🐕🐕🐕</marquee>
+                    <h3 style="background: black; color: white; padding: 10px;">PROUD BLOODLINE</h3>
                 </div>
             </div>
         `;
     }
 
-    // Styles for vibrations and strobes
+    // CSS Animations
     const style = document.createElement('style');
     style.innerHTML = `
-        @keyframes shake { 0% {left:2px;} 50% {left:-2px;} 100% {left:0;} }
-        @keyframes strobe { 
-            0% {background: #ff00ff;} 33% {background: #00ffff;} 
-            66% {background: #ffff00;} 100% {background: #ff00ff;} 
-        }
+        @keyframes glitch { 0% { filter: hue-rotate(0deg); } 50% { filter: invert(1); } 100% { filter: hue-rotate(360deg); } }
+        @keyframes strobe { 0% { background: #ff00ff; } 50% { background: #00ffff; } 100% { background: #ffff00; } }
     `;
     document.head.appendChild(style);
 </script>
 """
 
-# --- Injecting into Streamlit ---
-components.html(troll_code, height=800)
+# --- Inject HTML ---
+components.html(troll_html, height=1000)
 
-# Cleaning up Streamlit UI
+# Hide Streamlit Default UI
 st.markdown("""
     <style>
     header, footer, #MainMenu {visibility: hidden !important;}
-    .stApp {background: black !important;}
+    .stApp {background: #fff5f5 !important;}
     </style>
     """, unsafe_allow_html=True)
