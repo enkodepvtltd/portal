@@ -1,120 +1,145 @@
 import streamlit as st
 import random
 
-# --- Page Setup ---
-st.set_page_config(page_title="Lineage Portal", layout="centered")
+# --- Total Page Takeover ---
+st.set_page_config(page_title="🚨 SYSTEM CRITICAL 🚨", layout="wide", initial_sidebar_state="collapsed")
 
-# Initialize Session State variables
+# Initialize State
 if 'stage' not in st.session_state:
     st.session_state.stage = 'auth'
-if 'errors' not in st.session_state:
-    st.session_state.errors = []
+if 'clicks' not in st.session_state:
+    st.session_state.clicks = 0
 if 'yes_scale' not in st.session_state:
     st.session_state.yes_scale = 1.0
-if 'no_pos' not in st.session_state:
-    st.session_state.no_pos = {"top": 70, "left": 60}
 
-# --- Global CSS ---
-st.markdown("""
+# --- THE CHAOS CSS ---
+st.markdown(f"""
     <style>
-    .stApp { background-color: #000; color: white; font-family: "Comic Sans MS", cursive; }
-    @keyframes flash {
-        0% { background: #ff00ff; }
-        50% { background: #00ffff; }
-        100% { background: #ffff00; }
-    }
-    .ultimate-container {
+    /* Hide Streamlit UI elements */
+    #MainMenu {{visibility: hidden;}}
+    footer {{visibility: hidden;}}
+    header {{visibility: hidden;}}
+    
+    .stApp {{
+        background-color: #000;
+        cursor: url('https://cur.cursors-4u.net/ani/ani-1/ani1.ani'), auto;
+    }}
+
+    /* Vibrating text effect */
+    @keyframes shake {{
+        0% {{ transform: translate(1px, 1px) rotate(0deg); }}
+        10% {{ transform: translate(-1px, -2px) rotate(-1deg); }}
+        20% {{ transform: translate(-3px, 0px) rotate(1deg); }}
+        100% {{ transform: translate(1px, -2px) rotate(-1deg); }}
+    }}
+
+    .troll-text {{
+        color: #ff0000;
+        font-family: "Comic Sans MS", cursive;
+        animation: shake 0.5s infinite;
+        text-shadow: 2px 2px #fff;
+    }}
+
+    /* Floating No Button */
+    .no-button {{
+        position: fixed;
+        transition: all 0.1s ease-in-out;
+        z-index: 9999;
+    }}
+
+    /* Ultimate Flash */
+    @keyframes party {{
+        0% {{ background: #ff00ff; }}
+        33% {{ background: #00ffff; }}
+        66% {{ background: #ffff00; }}
+        100% {{ background: #ff00ff; }}
+    }}
+    .party-bg {{
         position: fixed; top: 0; left: 0; width: 100vw; height: 100vh;
-        animation: flash 0.1s infinite; z-index: 10; display: flex;
-        align-items: center; justify-content: center;
-    }
-    .popup {
-        position: fixed; width: 220px; background: #ccc; border: 3px outset white;
-        padding: 10px; color: black; z-index: 500; font-family: Arial, sans-serif;
-    }
+        animation: party 0.05s infinite; z-index: 10000;
+        display: flex; align-items: center; justify-content: center;
+        flex-direction: column;
+    }}
     </style>
     """, unsafe_allow_html=True)
 
-# --- Logic Functions ---
-def move_no_button():
-    st.session_state.no_pos = {"top": random.randint(20, 80), "left": random.randint(10, 80)}
-    st.session_state.yes_scale += 0.4
-    new_err = {
-        "id": random.random(),
-        "top": random.randint(20, 70),
-        "left": random.randint(10, 70),
-        "msg": random.choice(["ERROR: DNA MISMATCH", "WARNING: SHIBU DETECTED", "UNAUTHORIZED DENIAL"])
-    }
-    st.session_state.errors.append(new_err)
-    if len(st.session_state.errors) > 8:
-        st.session_state.stage = 'virus'
-
-# --- Stage 1: Auth ---
+# --- Stage 1: The Trap ---
 if st.session_state.stage == 'auth':
-    st.markdown("<div style='border: 2px solid lime; padding: 30px; text-align: center; background: #111;'>", unsafe_allow_html=True)
-    st.markdown("<h1 style='color: lime;'>🔐 SECURE LINEAGE PORTAL</h1>", unsafe_allow_html=True)
-    st.write("Accessing records for: **PATTI SHIBU CLAN**")
-    if st.button("ENTER PORTAL"):
+    st.markdown("<h1 class='troll-text' style='text-align:center; font-size: 4rem;'>🛑 DNA ACCESS RESTRICTED 🛑</h1>", unsafe_allow_html=True)
+    st.write("### Detecting 'Patti Shibu' genetics in your browser cache...")
+    if st.button("PROVE YOU ARE NOT A DOG"):
         st.session_state.stage = 'question'
         st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
 
-# --- Stage 2: The Question ---
+# --- Stage 2: The Impossible Question ---
 elif st.session_state.stage == 'question':
-    st.markdown(f"<h1 style='text-align: center; color: yellow;'>Final Confirmation: <br/> Is Patti Shibu your father?</h1>", unsafe_allow_html=True)
+    st.markdown("<h1 class='troll-text' style='text-align:center;'>IS PATTI SHIBU YOUR REAL FATHER?</h1>", unsafe_allow_html=True)
     
-    # Yes Button (using a standard button that grows)
+    # The Yes Button grows based on how many times she tries to click No
+    yes_size = 15 + (st.session_state.clicks * 20)
+    
     col1, col2 = st.columns([1, 1])
     with col1:
-        if st.button("YES (I ACCEPT MY FATE)", use_container_width=True):
+        # Actual Streamlit button to trigger the win
+        if st.button("YES (I SURRENDER)", key="win_btn"):
             st.session_state.stage = 'ultimate'
             st.rerun()
+        # Visual overlay for the growing Yes button
+        st.markdown(f"""
+            <div style="position: fixed; top: 40%; left: 10%; z-index: 1000;">
+                <button style="font-size: {yes_size}px; padding: 20px; background: lime; border: 5px solid white; cursor: pointer;">
+                    YES
+                </button>
+            </div>
+        """, unsafe_allow_html=True)
+
+    # The "No" Button - Moves randomly every time the page refreshes
+    no_x = random.randint(10, 80)
+    no_y = random.randint(10, 80)
     
-    # The "No" Button (Moving using HTML injection)
     st.markdown(f"""
-        <div style="position: fixed; top: {st.session_state.no_pos['top']}%; left: {st.session_state.no_pos['left']}%; z-index: 1000;">
-            <button style="padding: 10px 30px; background: red; color: white; border: none; border-radius: 5px; font-weight: bold; cursor: not-allowed;">
+        <div style="position: fixed; top: {no_y}%; left: {no_x}%; z-index: 9999;">
+            <button style="padding: 15px 40px; background: red; color: white; font-weight: bold; transform: rotate({random.randint(-20, 20)}deg);">
                 NO
             </button>
         </div>
-        """, unsafe_allow_html=True)
-    
-    # Secretly trigger the "No" logic when they try to click anywhere or use this helper
-    if st.button("No? Click here to confirm denial"):
-        move_no_button()
+    """, unsafe_allow_html=True)
+
+    # Invisible "Ghost" buttons that cover the screen to trigger reruns
+    if st.button("Try to click NO", use_container_width=True):
+        st.session_state.clicks += 1
+        if st.session_state.clicks > 10:
+            st.session_state.stage = 'bsod'
         st.rerun()
 
-    # Error Popups
-    for err in st.session_state.errors:
-        st.markdown(f"""
-            <div class="popup" style="top: {err['top']}%; left: {err['left']}%">
-                <div style="background: darkblue; color: white; font-size: 0.7rem; padding: 2px;">System Message</div>
-                <p style="font-size: 0.9rem; font-weight: bold;">{err['msg']}</p>
-                <button>OK</button>
-            </div>
-            """, unsafe_allow_html=True)
-
-# --- Stage 3: Virus ---
-elif st.session_state.stage == 'virus':
-    st.markdown("<div style='position:fixed; top:0; left:0; width:100vw; height:100vh; background:red; text-align:center; padding-top:100px; z-index:9999;'>", unsafe_allow_html=True)
-    st.markdown("<h1 style='font-size: 5rem;'>SYSTEM CRASH!!</h1>", unsafe_allow_html=True)
-    st.markdown("<p style='font-size: 2rem;'>Too many lies detected. Lineage auto-confirmed.</p>", unsafe_allow_html=True)
-    if st.button("FIX SYSTEM"):
+# --- Stage 3: Fake Blue Screen ---
+elif st.session_state.stage == 'bsod':
+    st.markdown("""
+        <div style="position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: #0000aa; color: white; padding: 50px; font-family: monospace; z-index: 99999;">
+            <h1>:(</h1>
+            <h2>Your PC ran into a Shibu problem and needs to restart.</h2>
+            <p>If you call support, give them this info: ERROR_Patti_Daughter_Detected</p>
+            <p>Completeing DNA Acceptance: 69%...</p>
+        </div>
+    """, unsafe_allow_html=True)
+    import time
+    # This automatically pushes her to the final stage after 3 seconds
+    if st.button("RESTART SYSTEM (CLICK HERE)"):
         st.session_state.stage = 'ultimate'
         st.rerun()
-    st.markdown("</div>", unsafe_allow_html=True)
 
-# --- Stage 4: Ultimate ---
+# --- Stage 4: THE PEAK SHIBU ---
 elif st.session_state.stage == 'ultimate':
     st.markdown("""
-        <div class="ultimate-container">
-            <div style="background: yellow; padding: 50px; border: 15px solid white; border-radius: 20px; text-align: center; color: black; box-shadow: 0 0 100px black;">
-                <h1 style="font-size: 3.5rem;">CONFIRMED! ✅</h1>
-                <p style="font-size: 1.5rem; color: red; font-weight: 900;">HAPPY TO BE A FRIEND OF <br/> PATTI SHIBU'S DAUGHTER</p>
-                <h2 style="color: blue;">(adhava Dog Shibu's daughter)</h2>
-                <p style="font-size: 3rem;">🐕🦴🐕🦴🐕</p>
+        <div class="party-bg">
+            <div style="background: white; padding: 40px; border: 20px solid black; text-align: center; transform: scale(1.5);">
+                <h1 style="color: black; font-size: 5rem;">CERTIFIED ✅</h1>
+                <h2 style="color: red;">OFFICIAL DAUGHTER OF</h2>
+                <h1 style="color: blue; font-size: 4rem;">PATTI SHIBU</h1>
+                <p style="font-size: 1rem;">(Woof Woof! 🐕)</p>
             </div>
-            <marquee style="font-size: 6rem; position: absolute; top: 10%;">🐕🐕🐕🐕🐕🐕🐕🐕🐕</marquee>
-            <marquee direction="right" style="font-size: 6rem; position: absolute; bottom: 10%;">🦴🦴🦴🦴🦴🦴🦴🦴🦴</marquee>
+            <div style="font-size: 10rem;">🐕🦴🐕🦴🐕</div>
+            <marquee scrollamount="50" style="font-size: 8rem;">🐕🐕🐕🐕🐕🐕🐕🐕🐕🐕🐕🐕</marquee>
+            <marquee direction="right" scrollamount="40" style="font-size: 8rem;">🦴🦴🦴🦴🦴🦴🦴🦴🦴🦴🦴🦴</marquee>
         </div>
-        """, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
